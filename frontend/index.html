@@ -2,79 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secure Login</title>
 
 <style>
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
 }
 
 body {
-    margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0ea5e9, #1e40af);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .card {
-    background: #ffffff;
-    width: 360px;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    width: 380px;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    color: white;
+    animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 h2 {
     text-align: center;
-    color: #1e293b;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-label {
-    font-size: 14px;
-    color: #475569;
-    display: block;
-    margin-bottom: 6px;
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
 }
 
 input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 18px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
+    padding: 14px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: white;
     font-size: 14px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+input::placeholder {
+    color: transparent;
+}
+
+label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    pointer-events: none;
+    transition: 0.3s ease;
 }
 
 input:focus {
-    outline: none;
-    border-color: #2563eb;
+    border-color: #ffffff;
+    background: rgba(255,255,255,0.2);
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 11px;
+    background: rgba(30, 64, 175, 0.8);
+    padding: 2px 6px;
+    border-radius: 6px;
 }
 
 button {
     width: 100%;
-    padding: 12px;
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    padding: 14px;
+    border-radius: 12px;
     border: none;
-    border-radius: 6px;
-    color: white;
-    font-size: 15px;
+    background: linear-gradient(135deg, #ffffff, #e0e7ff);
+    color: #1e3a8a;
     font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
+    transition: 0.3s ease;
 }
 
 button:hover {
-    opacity: 0.92;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
 #error {
-    margin-top: 12px;
-    color: #dc2626;
+    margin-top: 15px;
     font-size: 13px;
     text-align: center;
+    color: #ffb4b4;
+}
+
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
 }
 </style>
 </head>
@@ -82,18 +135,27 @@ button:hover {
 <body>
 
 <div class="card">
-    <h2>Secure Data Cloud Storage</h2>
+    <h2>Secure Data Cloud</h2>
 
     <form id="loginForm">
-        <label>Username</label>
-        <input type="text" id="username" required>
 
-        <label>Password</label>
-        <input type="password" id="password" required>
+        <div class="form-group">
+            <input type="text" id="username" placeholder=" " required>
+            <label>Username</label>
+        </div>
 
-        <button type="submit">Submit</button>
+        <div class="form-group">
+            <input type="password" id="password" placeholder=" " required>
+            <label>Password</label>
+        </div>
+
+        <button type="submit">Sign In</button>
         <div id="error"></div>
     </form>
+
+    <div class="footer">
+        Protected by enterprise-grade encryption
+    </div>
 </div>
 
 <script>
